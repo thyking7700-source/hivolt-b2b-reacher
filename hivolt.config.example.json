@@ -1,0 +1,5 @@
+{
+  "publicHost": "panel.yourdomain.com",
+  "port": 80,
+  "publicIp": ""
+}

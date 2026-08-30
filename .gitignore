@@ -1,0 +1,11 @@
+node_modules/
+.project_id
+.github_repo
+.env
+.env.*
+license.secret
+license-issued.json
+hivolt.config.json
+scripts/generate-token.mjs
+vendor/
+hivolt-vendor-kit/

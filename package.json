@@ -4,8 +4,8 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "dev": "node scripts/with-app-env.mjs vite dev --host 0.0.0.0 --port 8080",
-    "dev:80": "node scripts/with-app-env.mjs vite dev --host 0.0.0.0 --port 80",
+    "dev": "vite dev --host 0.0.0.0 --port 8080",
+    "dev:80": "vite dev --host 0.0.0.0 --port 80",
     "setup": "node scripts/setup.mjs"
   },
   "dependencies": {
@@ -14,5 +14,8 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "zod": "^4.4.0"
+  },
+  "devDependencies": {
+    "vite": "^8.2.0"
   }
 }

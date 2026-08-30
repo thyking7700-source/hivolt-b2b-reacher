@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@500;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-background: #070b12;
+  --color-foreground: #e6f4ff;
+  --color-muted-foreground: #7f93a8;
+  --font-sans: Rajdhani, ui-sans-serif, system-ui, sans-serif;
+}
+
+html, body { min-height: 100dvh; background: #070b12; color: #e6f4ff; }
+
+.hivolt-login-root {
+  --c: #00f0ff; --bg: #040c12; --panel: #060f18; --border: rgba(0, 240, 255, 0.2); --text: #b8d0df; --dim: #2a4555;
+  min-height: 100dvh; background: var(--bg); color: var(--text); font-family: Rajdhani, sans-serif;
+  display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
+}
+.hivolt-login-root .card {
+  position: relative; width: 100%; max-width: 420px; padding: 2.5rem 2.5rem 2rem;
+  background: var(--panel); border: 1px solid var(--border); z-index: 1; margin: 1rem;
+}
+.hivolt-login-root .corner { position: absolute; width: 18px; height: 18px; border-color: var(--c); border-style: solid; }
+.hivolt-login-root .corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.hivolt-login-root .corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+.hivolt-login-root .corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+.hivolt-login-root .corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+.hivolt-login-root .logo-area { text-align: center; margin-bottom: 2rem; }
+.hivolt-login-root .logo-icon {
+  display: inline-flex; align-items: center; justify-content: center; width: 66px; height: 66px;
+  border: 1px solid var(--c); margin: 0 auto 1.1rem; font-size: 2.1rem;
+}
+.hivolt-login-root .brand-name { font-family: "Share Tech Mono", monospace; font-size: 1.5rem; letter-spacing: 0.1em; color: var(--c); text-transform: uppercase; }
+.hivolt-login-root .brand-sub { font-size: 0.7rem; letter-spacing: 0.25em; color: var(--dim); text-transform: uppercase; margin-top: 4px; }
+.hivolt-login-root .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--c), transparent); opacity: 0.28; margin: 1.6rem 0; }
+.hivolt-login-root .error-box { background: rgba(255, 62, 94, 0.08); border: 1px solid rgba(255, 62, 94, 0.35); color: #ff7b96; padding: 0.6rem 0.85rem; font-size: 0.82rem; margin-bottom: 1.25rem; }
+.hivolt-login-root .field-label { display: block; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c); margin-bottom: 0.45rem; font-family: "Share Tech Mono", monospace; }
+.hivolt-login-root .field-label::before { content: "> "; opacity: 0.45; }
+.hivolt-login-root .input { width: 100%; padding: 0.72rem 1rem; background: rgba(0, 240, 255, 0.03); border: 1px solid var(--border); color: var(--text); font-family: "Share Tech Mono", monospace; outline: none; }
+.hivolt-login-root .btn { width: 100%; padding: 0.78rem 1rem; margin-top: 1.4rem; background: transparent; border: 1px solid var(--c); color: var(--c); font-family: "Share Tech Mono", monospace; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; position: relative; overflow: hidden; }
+.hivolt-login-root .btn-fill { position: absolute; inset: 0; background: var(--c); transform: scaleX(0); transform-origin: left; transition: transform 0.28s; }
+.hivolt-login-root .btn-label { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+.hivolt-login-root .btn:hover .btn-fill { transform: scaleX(1); }
+.hivolt-login-root .btn:hover { color: var(--bg); }
+.hivolt-login-root .status-dot { width: 7px; height: 7px; background: #00ff88; border-radius: 50%; }
+.hivolt-login-root .footer-note { text-align: center; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); margin-top: 1.5rem; }
+.hivolt-session-chip { position: fixed; right: 16px; bottom: 16px; display: flex; gap: 10px; padding: 8px 10px; background: rgba(8, 16, 24, 0.92); border: 1px solid #163044; color: #7f93a8; font-size: 11px; }
+.hivolt-session-chip button { border: 1px solid #1de0ff; background: transparent; color: #9af3ff; padding: 4px 8px; }

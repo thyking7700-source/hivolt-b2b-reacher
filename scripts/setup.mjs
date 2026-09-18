@@ -2,7 +2,7 @@
 import { execSync, spawnSync } from "node:child_process";
 import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
-import { existsSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -28,10 +28,12 @@ function detectPublicIp() {
 }
 
 function writeStartScripts(port) {
-  const bat = `@echo off\r\ncd /d "%~dp0"\r\necho.\r\necho  HIVOLT B2B REACHER\r\necho  Login page comes first — paste the access token you were sold.\r\necho.\r\nnode ".\\node_modules\\vite\\bin\\vite.js" dev --host 0.0.0.0 --port ${port}\r\npause\r\n`;
+  const bat = `@echo off\r\ncd /d "%~dp0"\r\necho.\r\necho  HIVOLT B2B REACHER\r\necho  Login page comes first — paste the access token you were sold.\r\necho.\r\ncall npm run setup:python\r\nif errorlevel 1 goto :error\r\nnode ".\\node_modules\\vite\\bin\\vite.js" dev --host 0.0.0.0 --port ${port}\r\npause\r\nexit /b 0\r\n\r\n:error\r\necho Auto-fill dependency setup failed. See the error above.\r\npause\r\nexit /b 1\r\n`;
   writeFileSync(join(root, "start-hivolt.bat"), bat);
-  const sh = `#!/bin/sh\ncd "$(dirname "$0")"\necho\necho " HIVOLT B2B REACHER"\nexec node ./node_modules/vite/bin/vite.js dev --host 0.0.0.0 --port ${port}\n`;
-  writeFileSync(join(root, "start-hivolt.sh"), sh);
+  const sh = `#!/bin/sh\ncd "$(dirname "$0")"\necho\necho " HIVOLT B2B REACHER"\nnpm run setup:python || exit 1\nexec node ./node_modules/vite/bin/vite.js dev --host 0.0.0.0 --port ${port}\n`;
+  const shPath = join(root, "start-hivolt.sh");
+  writeFileSync(shPath, sh);
+  if (process.platform !== "win32") chmodSync(shPath, 0o755);
 }
 
 async function main() {
@@ -53,13 +55,24 @@ async function main() {
 
   const rl = createInterface({ input, output });
   try {
-    if (!existsSync(join(root, "node_modules"))) {
-      console.log("\nInstalling npm packages (this can take a few minutes)...");
-      const okInstall = run(process.platform === "win32" ? "npm.cmd" : "npm", ["install"]);
-      if (!okInstall) {
-        console.error("npm install failed. Check the log above and re-run setup.");
-        process.exit(1);
-      }
+    console.log("\nInstalling npm packages (this can take a few minutes)...");
+    const okInstall = run(process.platform === "win32" ? "npm.cmd" : "npm", ["install"]);
+    if (!okInstall) {
+      console.error("npm install failed. Check the log above and re-run setup.");
+      process.exit(1);
+    }
+
+    // Install Playwright browser binaries (chromium, firefox, webkit)
+    console.log("\nInstalling Playwright browser binaries...");
+    const okPlaywright = run(process.platform === "win32" ? "npx.cmd" : "npx", ["playwright", "install"]);
+    if (!okPlaywright) {
+      console.warn("Playwright install had issues, but continuing. Auto-fill may fail.");
+    }
+
+    console.log("\nChecking Python dependencies for auto-fill...");
+    const pythonSetup = run(process.execPath, [join(root, "scripts", "setup-python.mjs")]);
+    if (!pythonSetup) {
+      console.warn("Python dependency setup failed. Auto-fill will remain unavailable until it is fixed.");
     }
 
     const publicIp = detectPublicIp();
@@ -92,7 +105,7 @@ async function main() {
       console.log(`Open  http://${publicIp}${port === "80" ? "" : ":" + port}/`);
     }
     console.log("Start with start-hivolt.bat (Windows) or sh start-hivolt.sh");
-    console.log("Paste the HV1 access token on the login page.");
+    console.log("Buyer only pastes the HV1 access token on the login page.");
   } finally {
     rl.close();
   }

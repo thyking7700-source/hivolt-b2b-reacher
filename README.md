@@ -1,34 +1,46 @@
 # HIVOLT B2B Reacher
 
-Public product copy. No vendor token generator and no signing secret are stored here.
+**B2B Lead Extraction & Outreach Engine** — Extract verified business contacts, build templates, and launch targeted campaigns at scale.
 
-The first screen is the **ACCESS TOKEN** login. Extract / template / Reach-out stay locked until a vendor-issued token is pasted.
+## What It Does
 
-Each install needs `license.secret` in the project root (sent privately by the vendor). Setup will ask for it. That file is gitignored.
+- **Extract domains** → Scan businesses for decision-maker emails
+- **Build templates** → Create reusable outreach sequences
+- **Send campaigns** → Manage and track multi-channel B2B outreach
+- **Real-time analytics** → Monitor open rates, replies, and engagement
 
-## Windows RDP install
+## Getting Started
 
-1. Clone this repo onto the machine.
-2. Right-click `setup.bat` and **Run as administrator**.
-3. Setup installs Node 22 if missing, runs `npm install`, asks for the vendor license secret, a domain, and a port (default 80).
-4. Point the domain A record at the public IP printed by setup.
-5. Double-click `start-hivolt.bat` or run:
+You need a **vendor-issued license key** to unlock the full platform. Contact your provider for access.
 
-```bat
-node .\node_modules\vite\bin\vite.js dev --host 0.0.0.0 --port 80
-```
+### Windows Setup (Fastest)
 
-6. Press **o** then **Enter**. You should see HIVOLT / B2B REACHER and ACCESS TOKEN.
+1. Download this repo
+2. Run `setup.bat` (right-click → Run as Administrator)
+3. Enter your license key when prompted
+4. Set your domain and port
+5. Open the URL shown — you're ready to extract leads
 
-## Dev
+### Mac / Linux Setup
 
 ```bash
-npm install
-npm run dev
+./setup.sh
+# Follow prompts for license key, domain, and port
+./start-hivolt.sh
 ```
 
-http://localhost:8080 — Node 22+.
+## Using HIVOLT
 
-## Limits
+1. **Log in** with your vendor-issued access token
+2. **Extract** → Upload company lists or domains to auto-detect business emails
+3. **Templates** → Build sequences with personalization variables
+4. **Campaign** → Select contacts and launch outreach
+5. **Track** → Monitor opens, clicks, replies in real-time
 
-Use this for people you already have addresses for. Unsolicited bulk email may be illegal where you are.
+## Important Legal Notice
+
+Only reach out to contacts you have legitimate business relationships with or proper consent. Unsolicited bulk email may violate laws in your jurisdiction (CAN-SPAM, GDPR, etc.). You are responsible for compliance.
+
+---
+
+**Need help?** Contact your provider's support team — they handle all technical issues and license management.
